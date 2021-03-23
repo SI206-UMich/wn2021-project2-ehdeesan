@@ -136,7 +136,13 @@ def extra_credit(filepath):
     Please see the instructions document for more information on how to complete this function.
     You do not have to write test cases for this function.
     """
-    pass
+    regex = r'\b[A-Z]\w{2}\w*(?: [A-Z]\w*\b)+'
+    with open(filepath, encoding="utf8") as html:
+        soup = BeautifulSoup(html, 'html.parser')
+        description = soup.find('div', id = 'description').text.strip()
+        entities = re.findall(regex, description)
+    return entities
+
 
 class TestCases(unittest.TestCase):
 
@@ -180,7 +186,8 @@ class TestCases(unittest.TestCase):
         regex = r'https://www.goodreads.com/book/show/'
         for url in TestCases.search_urls:
             self.assertTrue(re.search(regex, url))
-    '''
+
+    
     def test_get_book_summary(self):
         # create a local variable – summaries – a list containing the results from get_book_summary()
         # for each URL in TestCases.search_urls (should be a list of tuples)
@@ -207,7 +214,7 @@ class TestCases(unittest.TestCase):
 
             # check that the first book in the search has 337 pages
         self.assertTrue(summaries[0][2], 337)  
-    '''
+    
 
     def test_summarize_best_books(self):
         # call summarize_best_books and save it to a variable
