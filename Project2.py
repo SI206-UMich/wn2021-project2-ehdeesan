@@ -142,7 +142,7 @@ def extra_credit(filepath):
         description = soup.find('div', id = 'description').text.strip()
         entities = re.findall(regex, description)
     return entities
-
+    # wait for email from staff
 
 class TestCases(unittest.TestCase):
 
